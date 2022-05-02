@@ -41,7 +41,6 @@ func main() {
 		} else if data["category"] == "polling" {
 
 			if data["counter"] == "disk" {
-
 				SSH.SshDisk(data)
 			} else if data["counter"] == "CPU" {
 				SSH.SshCPU(data)
@@ -75,6 +74,11 @@ func main() {
 
 		} else if data["category"] == "polling" {
 
+			if data["counter"] == "systemInfo" {
+
+				SNMP.SnmpSystem(data)
+
+			}
 		}
 	}
 

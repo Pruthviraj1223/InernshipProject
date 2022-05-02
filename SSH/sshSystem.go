@@ -1,6 +1,7 @@
 package SSH
 
 import (
+	"encoding/json"
 	"fmt"
 	"golang.org/x/crypto/ssh"
 	"strings"
@@ -67,7 +68,24 @@ func SshSystem(data map[string]interface{}) {
 		systemMap["system.context.switches"] = output[11]
 
 	}
+	sesion.Close()
 
-	fmt.Println(systemMap)
+	sesion, _ = sshClient.NewSession()
+
+	res, _ = sesion.Output("uname -a")
+
+	strArray := strings.Split(string(res), " ")
+
+	systemMap["system.user.name"] = strArray[1]
+
+	systemMap["system.os.name"] = strArray[0]
+
+	systemMap["system.os.version"] = strArray[3]
+
+	systemMap["system.uptime"] = strArray[5] + " " + strArray[6] + " " + strArray[7] + " " + strArray[8]
+
+	bytes, _ := json.MarshalIndent(systemMap, " ", " ")
+
+	fmt.Println(string(bytes))
 
 }
