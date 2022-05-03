@@ -16,7 +16,13 @@ func WinrmDiscovery(data map[string]interface{}) string {
 
 	endpoint := winrm.NewEndpoint(host, port, false, false, nil, nil, nil, 0)
 
-	_, err := winrm.NewClient(endpoint, name, password)
+	client, err := winrm.NewClient(endpoint, name, password)
+
+	_, err = client.CreateShell()
+
+	if err != nil {
+		return err.Error()
+	}
 
 	if err != nil {
 

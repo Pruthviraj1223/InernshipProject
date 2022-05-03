@@ -41,18 +41,28 @@ func main() {
 		} else if data["category"] == "polling" {
 
 			if data["counter"] == "disk" {
+
 				SSH.SshDisk(data)
+
 			} else if data["counter"] == "CPU" {
+
 				SSH.SshCPU(data)
+
 			} else if data["counter"] == "Memory" {
+
 				SSH.SshMemory(data)
+
 			} else if data["counter"] == "Process" {
+
 				SSH.SshProcess(data)
+
 			} else if data["counter"] == "SystemInfo" {
+
 				SSH.SshSystem(data)
 			}
 
 		}
+
 	} else if data["metricType"] == "windows" {
 
 		if data["category"] == "discovery" {
@@ -62,6 +72,24 @@ func main() {
 			fmt.Println(ans)
 
 		} else if data["category"] == "polling" {
+
+			if data["counter"] == "disk" {
+
+				WINRM.WinrmDisk(data)
+
+			} else if data["counter"] == "CPU" {
+
+				WINRM.WinrmCPU(data)
+
+			} else if data["counter"] == "process" {
+
+				WINRM.WinrmProcess(data)
+
+			} else if data["counter"] == "memory" {
+
+				WINRM.WinrmMemory(data)
+
+			}
 
 		}
 	} else if data["metricType"] == "networking" {
@@ -77,6 +105,10 @@ func main() {
 			if data["counter"] == "systemInfo" {
 
 				SNMP.SnmpSystem(data)
+
+			} else if data["counter"] == "interface" {
+
+				SNMP.SnmpInterface(data)
 
 			}
 		}

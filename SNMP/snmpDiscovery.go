@@ -7,9 +7,9 @@ import (
 
 func SnmpDiscovery(data map[string]interface{}) string {
 
-	host := (data["ip"]).(string)
+	host := data["ip"].(string)
 
-	port := int((data["port"]).(float64))
+	port := (data["port"]).(float64)
 
 	community := (data["community"]).(string)
 
@@ -17,7 +17,7 @@ func SnmpDiscovery(data map[string]interface{}) string {
 
 		Target: host,
 
-		Port: uint16((port)),
+		Port: uint16(port),
 
 		Community: community,
 
@@ -28,11 +28,21 @@ func SnmpDiscovery(data map[string]interface{}) string {
 
 	err := params.Connect()
 
+	_, err = params.Get([]string{"1.3.6.1.2.1.1.5.0"})
+
 	if err != nil {
+
 		return err.Error()
+
 	}
 
 	defer params.Conn.Close()
+
+	if err != nil {
+
+		return err.Error()
+
+	}
 
 	return "true"
 }
